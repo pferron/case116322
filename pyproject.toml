@@ -40,3 +40,6 @@ optional = true
 
 [tool.poetry.group.extra.dependencies]
 pyarrow = "12.0.0"
+
+[build-system]
+build-backend = "poetry.masonry.api"
