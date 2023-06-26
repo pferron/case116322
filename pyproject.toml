@@ -1,3 +1,92 @@
+#[build-system]
+#requires = [
+#    "setuptools>=67",
+#    "wheel>=0.40"
+#]
+#build-backend = "setuptools.build_meta"
+[build-system]
+requires = ["poetry>=1.4.2"]
+build-backend = "poetry.masonry.api"
+
+[project]
+name = "lightcode"
+version = "1.0.3"
+description = "Package for detection, localization and quantification code"
+keywords = ["gas dispersion","detection", "localization", "quantification", "lightsource", "lightcode"]
+readme= "README.md"
+authors = [{ name = "Bas van de Kerkhof", email = "Bas.vandeKerkhof@shell.com" },
+{ name = "Matthew Jones", email = "Matthew.M.Jones2@shell.com" },
+{ name = "David Randell", email = "David.Randell@shell.com" }]
+urls = {Repository = "https://github.com/sede-x/gas_dispersion_LightCode"}
+requires-python = "==3.11.*"
+dependencies = [
+    "pandas==2.0.1",
+    "numpy==1.24.3",
+    "azure-storage-blob==12.16.0",
+    "h5py==3.8.0",
+    "plotly==5.14.1",
+    "scipy==1.10.1",
+    "pymap3d==3.0.1",
+    "python-dotenv==1.0.0",
+    "geojson==3.0.1",
+    "geopandas==0.12.2",
+    "shapely==2.0.1",
+    "Fiona==1.9.3",
+    "scikit-learn==1.2.2"]
+
+[project.optional-dependencies]
+test = ["pytest==7.3.1", "pytest-cov==4.0.0"]
+mcmc = ["mcmc@git+https://github.com/sede-x/general_mcmc.git@main"]
+extra = ["pyarrow==12.0.0"]
+contributor = ["black==23.3.0", "isort==5.12.0", "pydocstyle==6.3.0", "pylint==2.17.3", "docformatter[tomli]==1.6.4"]
+documentation = ["Sphinx==7.0.0", "sphinx_autodoc_typehints==1.22"]
+
+[tool.pytest.ini_options]
+addopts = "--cov=lightcode --cov-fail-under=1 --ignore-glob=*plot*"
+testpaths = [
+    "tests",
+]
+
+[tool.coverage.report]
+omit = ["*plot*"]
+exclude_lines = [".*def.*plot.*"]
+
+[tool.coverage.run]
+relative_files = true
+source = ["src/"]
+
+[tool.pylint]
+fail-under=9.0
+max-line-length=120
+py-version=3.11
+
+[tool.black]
+line-length = 120
+target-version = ['py311']
+
+[tool.pydocstyle]
+convention = "google"
+add-ignore = ["D105", "D107"]
+
+[tool.isort]
+profile = "black"
+
+[tool.docformatter]
+recursive = true
+wrap-summaries = 120
+wrap-descriptions = 120
+blank = true
+
+[tool.poetry]
+name = "lightcode"
+version = "1.0.3"
+description = "Package for detection, localization and quantification code."
+authors = ["Bas van de Kerkhof <Bas.vandeKerkhof@shell.com>", "Matthew Jones <Matthew.M.Jones2@shell.com>", "David Randell <David.Randell@shell.com>"]
+homepage = "https://github.com/sede-x/gas_dispersion_LightCode"
+repository = "https://github.com/sede-x/gas_dispersion_LightCode"
+documentation = "https://github.com/sede-x/gas_dispersion_LightCode"
+readme = "README.md"
+
 [tool.poetry.dependencies]
 python = "3.11.*"
 pandas = "2.0.1"
@@ -35,11 +124,8 @@ pydocstyle = "6.3.0"
 pylint = "2.17.3"
 docformatter = "1.6.4"
 
-[tool.poetry.extra.contributor]
+[tool.poetry.group.extra]
 optional = true
 
 [tool.poetry.group.extra.dependencies]
 pyarrow = "12.0.0"
-
-[build-system]
-build-backend = "poetry.masonry.api"
